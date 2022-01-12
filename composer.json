@@ -1,6 +1,8 @@
 {
-    "type": "project",
+    "name": "saro0h/to-do-list",
     "license": "proprietary",
+    "version": "0.1.0",
+    "type": "project",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
