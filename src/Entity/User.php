@@ -20,9 +20,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
 
