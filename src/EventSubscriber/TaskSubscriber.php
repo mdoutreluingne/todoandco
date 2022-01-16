@@ -15,9 +15,22 @@ class TaskSubscriber implements EventSubscriberInterface
      */
     private $security;
 
+    private $skipLoad;    
+
     public function __construct(Security $security)
     {
         $this->security = $security;
+        $this->skipLoad = false;
+    }
+
+    public function skipLoad(): void
+    {
+        $this->skipLoad = true;
+    }
+
+    public function unSkipLoad(): void
+    {
+        $this->skipLoad = false;
     }
 
     public function getSubscribedEvents(): array
@@ -33,10 +46,10 @@ class TaskSubscriber implements EventSubscriberInterface
 
         // if this subscriber only applies to certain entity types,
         // add some code to check the entity type as early as possible
-        if (!$entity instanceof Task) {
+        if (!$entity instanceof Task || $this->skipLoad) {
             return;
         }
-        dd($entity);
+
         $entity->setUser($this->security->getUser());
     }
 }

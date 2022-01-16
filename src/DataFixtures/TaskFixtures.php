@@ -4,15 +4,24 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Task;
+use App\EventSubscriber\TaskSubscriber;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $taskSubscriber;
+
+    public function __construct(TaskSubscriber $taskSubscriber)
+    {
+        $this->taskSubscriber = $taskSubscriber;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
+        $this->taskSubscriber->skipLoad();
 
         for ($i = 1; $i <= 15; $i++) {
             $isDone = random_int(0, 1);
