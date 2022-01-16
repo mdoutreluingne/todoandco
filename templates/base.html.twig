@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
         <!-- Custom CSS -->
-        <link href="css/shop-homepage.css" rel="stylesheet">
+        <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +38,11 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
+                {# ROLE_ADMIN for manage users #}
+                {%  if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
+                <a href="{{ path('user_list') }}" class="btn btn-info">Gérer les utilisateurs</a>
+                {% endif %}
 
                 {% if app.user %}
                 <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
@@ -79,7 +83,6 @@
         <!-- /.container -->
 
         <div class="container">
-
             <hr>
             <footer>
                 <div class="row">
@@ -88,7 +91,6 @@
                     </div>
                 </div>
             </footer>
-
         </div>
 
     </body>
