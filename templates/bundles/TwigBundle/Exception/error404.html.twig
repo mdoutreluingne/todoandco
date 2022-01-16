@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header_img %}{% endblock %}
+{% block body %}
+<div id="errorBlock">
+    <p id="imageError"><img src="{{ asset('img/error.png') }}" alt="Erreur {{ status_code }} !" /></p>
+    <p>Erreur {{ status_code }}</p>
+    <p>Oups ! La page à laquelle vous souhaitez accéder semble ne pas exister. <br /> Retour à <a href="{{ path('homepage') }}" title="Retour à l'accueil">l'accueil</a></p>
+</div>
+{% endblock %}
