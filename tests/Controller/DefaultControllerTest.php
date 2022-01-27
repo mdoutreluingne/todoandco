@@ -23,22 +23,35 @@ class DefaultControllerTest extends WebTestCase
         $this->admin = $userRepository->findOneBy(['username' => 'admin']);
     }
 
+    /**
+     * test home page not loggin
+     *
+     * @return void
+     */
     public function testHomePageWhenNotLoggedIn(): void
     {
         $this->client->request('GET', '/');
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode()); //on vérifie qu'il y a bien une redirection si on n'est pas loggué
+        // we treated that there is indeed a redirection if we are not logged in
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->followRedirect();
-        $this->assertSame(2, $crawler->filter('#username')->count() + $crawler->filter('#password')->count()); //on vérifie qu'il y a bien le champ username et password
+        // we check that there is indeed the username and password field
+        $this->assertSame(2, $crawler->filter('#username')->count() + $crawler->filter('#password')->count());
     }
 
+    /**
+     * test home page loggin
+     *
+     * @return void
+     */
     public function testHomePageWhenLoggedIn(): void
     {
         $this->client->loginUser($this->admin);
         $this->client->request('GET', '/');
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); //on vérifie qu'on arrive sur la page d'accueil
-        $this->assertStringContainsString("Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !", $this->client->getResponse()->getContent()); //on vérifie qu'il s'agit bien de la page d'accueil
+        // we check that we arrive on the home page
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertStringContainsString("Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !", $this->client->getResponse()->getContent());
     }
 }

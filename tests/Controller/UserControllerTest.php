@@ -94,7 +94,7 @@ class UserControllerTest extends WebTestCase
         $this->client->loginUser($this->admin);
         $crawler = $this->client->request('GET', '/users/2/edit');
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode()); //on s'assure que l'appli retourne un 200
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $editUserForm = $crawler->selectButton("Modifier")->form();
         $editUserForm['user[username]'] = "testEdit";
