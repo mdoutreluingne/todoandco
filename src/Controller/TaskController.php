@@ -65,6 +65,9 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
+        // check for "edit" access: calls all voters
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -101,7 +104,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
-        // check for "edit" access: calls all voters
+        // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('TASK_DELETE', $task);
 
         $em = $this->getDoctrine()->getManager();
