@@ -15,9 +15,9 @@ class TaskSubscriber implements EventSubscriberInterface
      */
     private $security;
 
-    private $skipLoad;    
+    public $skipLoad;    
 
-    public function __construct(Security $security)
+    public function __construct(Security $security = null)
     {
         $this->security = $security;
         $this->skipLoad = false;
@@ -26,11 +26,6 @@ class TaskSubscriber implements EventSubscriberInterface
     public function skipLoad(): void
     {
         $this->skipLoad = true;
-    }
-
-    public function unSkipLoad(): void
-    {
-        $this->skipLoad = false;
     }
 
     public function getSubscribedEvents(): array

@@ -36,11 +36,6 @@ class TaskController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        if (!$this->getUser()) {
-            $this->addFlash('error', 'Vous devez être authentifié pour créer une tâche');
-
-            return $this->redirectToRoute('task_list');
-        }
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 

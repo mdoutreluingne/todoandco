@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
-use App\Tests\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

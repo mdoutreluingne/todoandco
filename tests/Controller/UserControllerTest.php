@@ -3,11 +3,10 @@
 namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
-use App\Tests\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserControllerTest extends BaseController
+class UserControllerTest extends WebTestCase
 {
     protected $client;
     private $user;

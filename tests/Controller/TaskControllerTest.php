@@ -4,14 +4,14 @@ namespace App\Tests\Controller;
 
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
-use App\Tests\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TaskControllerTest extends BaseController
+class TaskControllerTest extends WebTestCase
 {
     protected $client;
     private $user;
+    private $admin;
     private $taskRepository;
 
     /**
@@ -27,6 +27,7 @@ class TaskControllerTest extends BaseController
 
         // retrieve the test users
         $this->user = $userRepository->findOneBy(['username' => 'mdoutreluingne']);
+        $this->admin = $userRepository->findOneBy(['username' => 'admin']);
     }
 
     public function testTasksListNotLoggedIn()
@@ -46,6 +47,34 @@ class TaskControllerTest extends BaseController
         // simulate user being logged in
         $this->client->loginUser($this->user);
         $crawler = $this->client->request('GET', '/tasks');
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertStringContainsString("Créer une tâche", $crawler->text());
+    }
+
+    public function testTasksDoneNotLoggedIn()
+    {
+        $this->client->request('GET', '/tasks/done');
+
+        // we make sure that the app returns a redirect
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        // redirect to login form /login
+        $crawler = $this->client->followRedirect();
+        $this->assertSame(2, $crawler->filter('form input#username')->count() + $crawler->filter('form input#password')->count());
+    }
+
+    /**
+     * Test task done
+     * 
+     * @return void
+     */
+    public function testTasksDoneLoggedIn(): void
+    {
+        // simulate user being logged in
+        $this->client->loginUser($this->admin);
+        $crawler = $this->client->request('GET', '/tasks/done');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
