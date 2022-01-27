@@ -30,7 +30,12 @@ class TaskControllerTest extends WebTestCase
         $this->admin = $userRepository->findOneBy(['username' => 'admin']);
     }
 
-    public function testTasksListNotLoggedIn()
+    /**
+     * test tasks list not loggedIn
+     *
+     * @return void
+     */
+    public function testTasksListNotLoggedIn(): void
     {
         $this->client->request('GET', '/tasks');
 
@@ -42,7 +47,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame(2, $crawler->filter('form input#username')->count() + $crawler->filter('form input#password')->count());
     }
 
-    public function testTasksListLoggedIn()
+    /**
+     * test tasks list loggedIn
+     *
+     * @return void
+     */
+    public function testTasksListLoggedIn(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -53,7 +63,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertStringContainsString("Créer une tâche", $crawler->text());
     }
 
-    public function testTasksDoneNotLoggedIn()
+    /**
+     * test tasks done not list loggedIn
+     *
+     * @return void
+     */
+    public function testTasksDoneNotLoggedIn(): void
     {
         $this->client->request('GET', '/tasks/done');
 
@@ -81,7 +96,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertStringContainsString("Créer une tâche", $crawler->text());
     }
 
-    public function testCreateTaskNotLoggedIn()
+    /**
+     * test create task not loggedIn
+     *
+     * @return void
+     */
+    public function testCreateTaskNotLoggedIn(): void
     {
         $this->client->request('GET', '/tasks/create');
 
@@ -93,7 +113,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame(2, $crawler->filter('form input#username')->count() + $crawler->filter('form input#password')->count());
     }
 
-    public function testCreateTaskAuthorized()
+    /**
+     * test create task loggedIn
+     *
+     * @return void
+     */
+    public function testCreateTaskAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -113,7 +138,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertStringContainsString("La tâche a été bien été ajoutée.", $successMessage);
     }
 
-    public function testEditTaskNotAuthorized()
+    /**
+     * test edit task not loggedIn
+     *
+     * @return void
+     */
+    public function testEditTaskNotAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -123,7 +153,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testEditTaskAuthorized()
+    /**
+     * test edit task loggedIn
+     *
+     * @return void
+     */
+    public function testEditTaskAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -145,7 +180,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertStringContainsString("La tâche a bien été modifiée.", $successMessage);
     }
 
-    public function testToggleTaskAuthorized()
+    /**
+     * test toggle task loggedIn
+     *
+     * @return void
+     */
+    public function testToggleTaskAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -153,13 +193,18 @@ class TaskControllerTest extends WebTestCase
         $idTaskUser = $this->taskRepository->findOneBy(['user' => $this->user])->getId();
         $crawler = $this->client->request('GET', '/tasks/' . $idTaskUser . '/toggle');
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode()); //on s'assure que ça retourne bien une redirection
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->followRedirect();
         $this->assertStringContainsString("Superbe !", $crawler->text());
     }
 
-    public function testDeleteTaskNotAuthorized()
+    /**
+     * test delete task not loggedIn
+     *
+     * @return void
+     */
+    public function testDeleteTaskNotAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);
@@ -168,7 +213,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testDeleteTaskAuthorized()
+    /**
+     * test delete task loggedIn
+     *
+     * @return void
+     */
+    public function testDeleteTaskAuthorized(): void
     {
         // simulate user being logged in
         $this->client->loginUser($this->user);

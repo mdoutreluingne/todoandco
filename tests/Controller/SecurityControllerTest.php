@@ -63,9 +63,10 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->submitForm('Se connecter', ['username' => 'admin', 'password' => 'adminadmin']);
         $crawler = $this->client->followRedirect();
 
+        // we check that it is indeed the home page admin version
         $this->assertStringContainsString('Se déconnecter', $crawler->text());
-        $this->assertStringContainsString('Créer un utilisateur', $crawler->text()); //on vérifie qu'il s'agit bien de la page d'accueil version admin
-        $this->assertStringContainsString('Gérer les utilisateurs', $crawler->text()); //on vérifie qu'il s'agit bien de la page d'accueil version admin
+        $this->assertStringContainsString('Créer un utilisateur', $crawler->text());
+        $this->assertStringContainsString('Gérer les utilisateurs', $crawler->text());
     }
 
     /**
@@ -80,7 +81,8 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->submitForm('Se connecter', ['username' => 'azerty', 'password' => 'azerty']);
         $crawler = $this->client->followRedirect();
 
-        $this->assertStringContainsString('Invalid credentials.', $crawler->text()); //on vérifie qu'il s'agit bien de la page de login avec le message d'erreur
+        // we check that it is indeed the login page with the error message
+        $this->assertStringContainsString('Invalid credentials.', $crawler->text());
     }
 
     /**
@@ -98,6 +100,6 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->followRedirect();
 
         // User is redirected to the login page
-        $this->assertEquals(2, $crawler->filter('form input#username')->count() + $crawler->filter('form input#password')->count()); //on vérifie qu'on retombe bien sur la page de login (il y a bien le champ username et password)
+        $this->assertEquals(2, $crawler->filter('form input#username')->count() + $crawler->filter('form input#password')->count());
     }
 }
