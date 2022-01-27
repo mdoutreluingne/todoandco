@@ -36,11 +36,6 @@ class TaskController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        if (!$this->getUser()) {
-            $this->addFlash('error', 'Vous devez être authentifié pour créer une tâche');
-
-            return $this->redirectToRoute('task_list');
-        }
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -65,6 +60,9 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
+        // check for "edit" access: calls all voters
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -101,7 +99,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
-        // check for "edit" access: calls all voters
+        // check for "delete" access: calls all voters
         $this->denyAccessUnlessGranted('TASK_DELETE', $task);
 
         $em = $this->getDoctrine()->getManager();

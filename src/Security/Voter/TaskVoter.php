@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Security;
 
 class TaskVoter extends Voter
 {
+    const EDIT = 'TASK_EDIT';
     const DELETE = 'TASK_DELETE';
 
     private $security;
@@ -23,7 +24,7 @@ class TaskVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::DELETE])
+        return in_array($attribute, [self::EDIT, self::DELETE])
             && $subject instanceof \App\Entity\Task;
     }
 
@@ -37,12 +38,20 @@ class TaskVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case self::EDIT:
+                return $this->canEdit($subject, $user);
+                break;
             case self::DELETE:
                 return $this->canDelete($subject, $user);
                 break;
         }
 
         return false;
+    }
+
+    private function canEdit($subject, User $user): bool
+    {
+        return $user === $subject->getUser();
     }
 
     private function canDelete($subject, User $user): bool
