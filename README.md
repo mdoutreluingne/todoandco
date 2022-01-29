@@ -1,6 +1,9 @@
 ToDo & Co
 ========
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/5a0e321da1ca7af9a15e/maintainability)](https://codeclimate.com/github/mdoutreluingne/todoandco/maintainability)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b189f76f4a214839bafaf983085c23f7)](https://www.codacy.com/gh/mdoutreluingne/todoandco/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mdoutreluingne/todoandco&amp;utm_campaign=Badge_Grade)
+
 Ce dépôt contient le code du projet 8 réalisé durant ma formation de développpeur PHP/Symfony à OpenClassrooms.
 Le projet est une application de To Do list et présente les fonctionnalités suivantes :
 * Espace utilisateur
@@ -8,9 +11,6 @@ Le projet est une application de To Do list et présente les fonctionnalités su
 * Ajout, édition et suppression de tâches à faire
 * Possibilité de marquer une tâche en terminée
 * Visualisation de la liste des tâches à faire/terminées
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/5a0e321da1ca7af9a15e/maintainability)](https://codeclimate.com/github/mdoutreluingne/todoandco/maintainability)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b189f76f4a214839bafaf983085c23f7)](https://www.codacy.com/gh/mdoutreluingne/todoandco/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mdoutreluingne/todoandco&amp;utm_campaign=Badge_Grade)
 
 ## Configuration du serveur requise
 
